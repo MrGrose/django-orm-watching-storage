@@ -1,6 +1,6 @@
 from datacenter.models import Visit
 from django.shortcuts import render
-from .models import Visit, get_duration, format_duration
+from datacenter.retrieve_and_format_duration import get_duration, format_duration
 import pytz
 
 
