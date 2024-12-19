@@ -5,16 +5,15 @@ import pytz
 
 
 def storage_information_view(request):
-    visits = Visit.objects.all()
+    visits = Visit.objects.filter(leaved_at=None)
     non_closed_visits = []
     local_tz = pytz.timezone("Europe/Moscow")
     for visit in visits:
-        if visit.leaved_at is None and visit.entered_at is not None:
-            dt_local = visit.entered_at.astimezone(local_tz)
-            formatted_date = dt_local.strftime("%d %B %Y %H:%M")
-            duration = get_duration(visits)
-            formatted_duration = format_duration(duration)
-            non_closed_visits.append({
+        dt_local = visit.entered_at.astimezone(local_tz)
+        formatted_date = dt_local.strftime("%d %B %Y %H:%M")
+        duration = get_duration(visits)
+        formatted_duration = format_duration(duration)
+        non_closed_visits.append({
                 'who_entered': visit.passcard,
                 'entered_at': formatted_date,
                 'duration': formatted_duration,
